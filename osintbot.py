@@ -265,7 +265,6 @@ async def photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # Main async entry
 import asyncio
-from telegram.ext import CommandHandler
 
 async def main():
     app = ApplicationBuilder().token(TOKEN).build()
@@ -279,8 +278,12 @@ async def main():
     app.add_handler(CommandHandler("address", address))
     app.add_handler(CommandHandler("photo", photo))
 
-    print("✅ Bot is running. Waiting for commands...")
-    await app.run_polling()
+    print("✅ Bot is starting...")
 
-if __name__ == '__main__':
+    await app.initialize()
+    await app.start()
+    await app.updater.start_polling()
+    await app.updater.idle()
+
+if __name__ == "__main__":
     asyncio.run(main())

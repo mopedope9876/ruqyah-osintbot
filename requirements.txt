@@ -1,4 +1,4 @@
 python-telegram-bot==20.7
-requests
+duckduckgo-search==8.0.4
 beautifulsoup4
-duckduckgo-search>=0.9
+requests

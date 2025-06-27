@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import re
 import urllib.parse
 import os
-from duckduckgo_search import ddg_images
+from duckduckgo_search.ddg import images as ddg_images
 
 # Your bot token here
 TOKEN = "7438357749:AAH3LA9PSTWBs-yt-xtdGyGLvtCGlcx5Rro"

@@ -229,7 +229,7 @@ async def address(update: Update, context: ContextTypes.DEFAULT_TYPE):
         headers = {"User-Agent": "Mozilla/5.0"}
         response = requests.get(url, headers=headers)
 
-        links = re.findall(r'https://[^"]+', response.text)
+        links = re.findall(r'https://[^"']+', response.text)
         matches = [l for l in links if any(x in l for x in ["eci.gov.in", ".pdf"])]
 
         if not matches:

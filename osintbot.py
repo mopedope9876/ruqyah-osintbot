@@ -229,7 +229,7 @@ async def address(update: Update, context: ContextTypes.DEFAULT_TYPE):
         headers = {"User-Agent": "Mozilla/5.0"}
         response = requests.get(url, headers=headers)
 
-        links = re.findall(r'https://[^"\']+', response.text)
+        links = re.findall(r'https://[^"']+', response.text)
         matches = [l for l in links if any(x in l for x in ["eci.gov.in", ".pdf"])]
 
         if not matches:
@@ -263,16 +263,24 @@ async def photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         await update.message.reply_text(f"⚠️ Error during image search: {e}")
 
-# Build app and add handlers
-app = ApplicationBuilder().token(TOKEN).build()
-app.add_handler(CommandHandler("start", start))
-app.add_handler(CommandHandler("scan", scan))
-app.add_handler(CommandHandler("plate", plate))
-app.add_handler(CommandHandler("ip", ip))
-app.add_handler(CommandHandler("username", username))
-app.add_handler(CommandHandler("sim", sim))
-app.add_handler(CommandHandler("address", address))
-app.add_handler(CommandHandler("photo", photo))
+# Main async entry
+import asyncio
+from telegram.ext import CommandHandler
 
-print("✅ Bot is running. Waiting for commands...")
-app.run_polling()
+async def main():
+    app = ApplicationBuilder().token(TOKEN).build()
+
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("scan", scan))
+    app.add_handler(CommandHandler("plate", plate))
+    app.add_handler(CommandHandler("ip", ip))
+    app.add_handler(CommandHandler("username", username))
+    app.add_handler(CommandHandler("sim", sim))
+    app.add_handler(CommandHandler("address", address))
+    app.add_handler(CommandHandler("photo", photo))
+
+    print("✅ Bot is running. Waiting for commands...")
+    await app.run_polling()
+
+if __name__ == '__main__':
+    asyncio.run(main())

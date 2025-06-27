@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import re
 import urllib.parse
 import os
-from duckduckgo_search import ddg_images
+from duckduckgo_search import DDGS
 
 # Your bot token here
 TOKEN = "7438357749:AAH3LA9PSTWBs-yt-xtdGyGLvtCGlcx5Rro"
@@ -251,13 +251,14 @@ async def photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(f"🖼️ Searching public image traces for: {query}...")
 
     try:
-        results = ddg_images(query, max_results=5)
-        if not results:
-            await update.message.reply_text("❌ No public images found.")
-            return
+        with DDGS() as ddgs:
+            results = ddgs.images(query, max_results=5)
+            if not results:
+                await update.message.reply_text("❌ No public images found.")
+                return
 
-        for img in results:
-            await update.message.reply_photo(photo=img['image'])
+            for img in results:
+                await update.message.reply_photo(photo=img['image'])
 
     except Exception as e:
         await update.message.reply_text(f"⚠️ Error during image search: {e}")

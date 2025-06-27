@@ -280,7 +280,7 @@ async def main():
 
     print("✅ Bot is starting...")
 
-        await app.run_polling()
+    await app.run_polling()
 
 
 if __name__ == "__main__":

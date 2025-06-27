@@ -1,4 +1,4 @@
-python-telegram-bot>=20.3,<21
+python-telegram-bot==20.8
 duckduckgo-search
 requests
 beautifulsoup4
